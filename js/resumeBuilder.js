@@ -1,6 +1,12 @@
+(function () {
+'use strict';
+// this function is strict...
+}());
+
 /*
 This is empty on purpose! Your code to build the resume will go here.
  */
+
 // DATA
 var bio = {
   "name": "Andrew Kim",
@@ -22,8 +28,7 @@ var bio = {
     var formattedRole = HTMLheaderRole.replace("%data%", "Web Developer");
 
     // name and contacts
-    $("#header").prepend(formattedRole);
-    $("#header").prepend(formattedName);
+    $("#header").prepend(formattedName,formattedRole);
 
     var formattedMobile = HTMLmobile.replace("%data%", bio.contacts.mobile);
     var formattedEmail = HTMLemail.replace("%data%", bio.contacts.email);
@@ -31,34 +36,25 @@ var bio = {
     var formattedGithub = HTMLgithub.replace("%data%", bio.contacts.github);
     var formattedLocation = HTMLlocation.replace("%data%", bio.contacts.location);
 
-    $("#topContacts").append(formattedMobile);
-    $("#topContacts").append(formattedEmail);
-    $("#topContacts").append(formattedTwitter);
-    $("#topContacts").append(formattedGithub);
-    $("#topContacts").append(formattedLocation);
+    $("#topContacts").append(formattedMobile,formattedEmail,formattedTwitter,formattedGithub,formattedLocation);
 
     // picture and welcome message
     var formattedBiopic = HTMLbioPic.replace("%data%", bio.biopic);
     var formattedWelcome = HTMLwelcomeMsg.replace("%data%", bio.welcomeMessage);
 
-    $("#about").append(formattedBiopic);
-    $("#about").append(formattedWelcome);
+    $("#about").append(formattedBiopic,formattedWelcome);
 
     // Skill Start
     $("#about").append(HTMLskillsStart);
 
     // loop skils array
-    for (skill in bio.skills) {
+    for (var skill = 0; skill < bio.skills.length; skill++) {
       var formattedSkills = HTMLskills.replace("%data%", bio.skills[skill]);
       $("#skills:last").append(formattedSkills);
     }
 
     //footer contact information
-    $("#footerContacts").append(formattedMobile);
-    $("#footerContacts").append(formattedEmail);
-    $("#footerContacts").append(formattedTwitter);
-    $("#footerContacts").append(formattedGithub);
-    $("#footerContacts").append(formattedLocation);
+    $("#footerContacts").append(formattedMobile,formattedEmail,formattedTwitter,formattedGithub,formattedLocation);
 
     $("#main").append(internationalizeButton);
   }
@@ -96,11 +92,12 @@ var education = {
   }],
   display: function() {
     //school loop first
-    for (school in education.schools) {
+    for (var school=0; school < education.schools.length; school++) {
       $("#education").append(HTMLschoolStart);
 
       var formattedName = HTMLschoolName.replace("%data%", education.schools[school].name);
       var formattedDegree = HTMLschoolDegree.replace("%data%", education.schools[school].degree);
+      var formattedNameDegree = formattedName + formattedDegree;
       var formattedDates = HTMLschoolDates.replace("%data%", education.schools[school].dates);
       var formattedLocation = HTMLschoolLocation.replace("%data%", education.schools[school].location);
       var temp = "";
@@ -114,23 +111,17 @@ var education = {
       }
       var formattedMajor = HTMLschoolMajor.replace("%data%", temp);
 
-      $(".education-entry:last").append(formattedName);
-      $(".education-entry:last").append(formattedDegree);
-      $(".education-entry:last").append(formattedDates);
-      $(".education-entry:last").append(formattedLocation);
-      $(".education-entry:last").append(formattedMajor);
+      $(".education-entry:last").append(formattedNameDegree,formattedDates,formattedLocation,formattedMajor);
     }
 
+    // Add Online Education header
+    var formattedClass = HTMLonlineClasses;
+    $("#education").append(formattedClass);
+
     // online course loop
-    for (course in education.onlineCourses) {
+    for (var course=0; course < education.onlineCourses.length; course++) {
       // enclose online course under education
       $("#education").append(HTMLschoolStart);
-
-      // put the h3 tag title only for the first time to avoid repeat
-      if (education.onlineCourses[course] == education.onlineCourses[0]) {
-        var formattedClass = HTMLonlineClasses;
-        $(".education-entry:last").append(formattedClass);
-      }
 
       var formattedTitle = HTMLonlineTitle.replace("%data%", education.onlineCourses[course].title);
       var formattedSchool = HTMLonlineSchool.replace("%data%", education.onlineCourses[course].school);
@@ -138,9 +129,7 @@ var education = {
       var formattedDate = HTMLonlineDates.replace("%data%", education.onlineCourses[course].date);
       var formattedUrl = HTMLonlineURL.replace("%data%", education.onlineCourses[course].url);
 
-      $(".education-entry:last").append(titleSchool);
-      $(".education-entry:last").append(formattedDate);
-      $(".education-entry:last").append(formattedUrl);
+      $(".education-entry:last").append(titleSchool,formattedDate,formattedUrl);
     }
   }
 };
@@ -161,7 +150,7 @@ var work = {
     "description": "Work description 2"
   }],
   display: function() {
-    for (job in work.jobs) {
+    for (var job=0; job < work.jobs.length; job++) {
       $("#workExperience").append(HTMLworkStart);
 
       var formattedEmployer = HTMLworkEmployer.replace("%data%", work.jobs[job].employer);
@@ -172,10 +161,7 @@ var work = {
       var formattedDates = HTMLworkDates.replace("%data%", work.jobs[job].dates);
       var formattedDescription = HTMLworkDescription.replace("%data%", work.jobs[job].description);
 
-      $(".work-entry:last").append(formattedEmployerTitle);
-      $(".work-entry:last").append(formattedLocation);
-      $(".work-entry:last").append(formattedDates);
-      $(".work-entry:last").append(formattedDescription);
+      $(".work-entry:last").append(formattedEmployerTitle,formattedLocation,formattedDates,formattedDescription);
     }
   }
 };
@@ -185,26 +171,27 @@ var projects = {
     "title": "Apple",
     "dates": "2011-2012",
     "description": "Made a website about apples",
-    "image": "http://fnsweb01.edc.usda.gov/food-groups/food_library/fruit/food_images/apples.gif"
+    "image": ["http://fnsweb01.edc.usda.gov/food-groups/food_library/fruit/food_images/apples.gif", "http://fnsweb01.edc.usda.gov/food-groups/food_library/fruit/food_images/apples.gif"]
   },{
     "title": "Orange",
     "dates": "2012-2013",
     "description": "Made a website about oranges",
-    "image": "http://www.solarjuice.com.au/wp-content/uploads/2013/06/small-orange2.png"
+    "image": ["http://www.solarjuice.com.au/wp-content/uploads/2013/06/small-orange2.png", "http://www.solarjuice.com.au/wp-content/uploads/2013/06/small-orange2.png"]
   }],
   display: function() {
-    for (project in projects.projects) {
+    for (var project=0; project<projects.projects.length; project++) {
       $("#projects").append(HTMLprojectStart);
 
       var formattedTitle = HTMLprojectTitle.replace("%data%", projects.projects[project].title);
       var formattedDates = HTMLprojectDates.replace("%data%", projects.projects[project].dates);
       var formattedDescription = HTMLprojectDescription.replace("%data%", projects.projects[project].description);
-      var formattedImage = HTMLprojectImage.replace("%data%", projects.projects[project].image);
 
-      $(".project-entry:last").append(formattedTitle);
-      $(".project-entry:last").append(formattedDates);
-      $(".project-entry:last").append(formattedDescription);
-      $(".project-entry:last").append(formattedImage);
+
+      $(".project-entry:last").append(formattedTitle,formattedDates,formattedDescription);
+      for (var i=0; i < projects.projects[project].image.length; i++) {
+        var formattedImage = HTMLprojectImage.replace("%data%", projects.projects[project].image[i]);
+        $(".project-entry:last").append(formattedImage);
+      }
     }
   }
 };

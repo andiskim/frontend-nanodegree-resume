@@ -1,3 +1,8 @@
+(function () {
+'use strict';
+// this function is strict...
+}());
+
 /*
 
 This file contains all of the code running in the background that makes resumeBuilder.js possible. We call these helper functions because they support your code in this course.
