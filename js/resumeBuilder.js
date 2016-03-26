@@ -171,12 +171,12 @@ var projects = {
     "title": "Apple",
     "dates": "2011-2012",
     "description": "Made a website about apples",
-    "image": ["http://fnsweb01.edc.usda.gov/food-groups/food_library/fruit/food_images/apples.gif", "http://fnsweb01.edc.usda.gov/food-groups/food_library/fruit/food_images/apples.gif"]
+    "images": ["http://fnsweb01.edc.usda.gov/food-groups/food_library/fruit/food_images/apples.gif", "http://fnsweb01.edc.usda.gov/food-groups/food_library/fruit/food_images/apples.gif"]
   },{
     "title": "Orange",
     "dates": "2012-2013",
     "description": "Made a website about oranges",
-    "image": ["http://www.solarjuice.com.au/wp-content/uploads/2013/06/small-orange2.png", "http://www.solarjuice.com.au/wp-content/uploads/2013/06/small-orange2.png"]
+    "images": ["http://www.solarjuice.com.au/wp-content/uploads/2013/06/small-orange2.png", "http://www.solarjuice.com.au/wp-content/uploads/2013/06/small-orange2.png"]
   }],
   display: function() {
     for (var project=0; project<projects.projects.length; project++) {
@@ -188,8 +188,8 @@ var projects = {
 
 
       $(".project-entry:last").append(formattedTitle,formattedDates,formattedDescription);
-      for (var i=0; i < projects.projects[project].image.length; i++) {
-        var formattedImage = HTMLprojectImage.replace("%data%", projects.projects[project].image[i]);
+      for (var i=0; i < projects.projects[project].images.length; i++) {
+        var formattedImage = HTMLprojectImage.replace("%data%", projects.projects[project].images[i]);
         $(".project-entry:last").append(formattedImage);
       }
     }
